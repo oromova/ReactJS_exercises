@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Fruits from './Fruits'
+import Filter from './Filter'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-  <Fruits/>
+  <Filter/>
   </React.StrictMode>,
 )
