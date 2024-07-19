@@ -22,18 +22,46 @@ export default class Filter extends Component {
     });
     }
 
+    const onDelete = (id) => {
+      console.log(id);
+    }
+
     return (
       <div>
-        <h1>Filter Name</h1>
-        <input onChange={onFilter} type="text" placeholder='name' />
-        {this.state.data.map(({id, name, status}) =>{
+        {/* <h1>Name: {this.state.name}</h1>
+        <h1>Surname:{this.state.surname}</h1>
+        <h1>State {this.state.count}</h1>
+        <input name='name' onChange={onChange} type="text" placeholder='name' />
+        <input onChange={onFilter} type="text" placeholder='filter'/> */}
+        <table border={'1px'} width={"100%"}>
+          <thead>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Delete</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+        <tbody>
+          {this.state.data.map(({id, name, status}) =>{
           return (
-            <h1 key={id}>
-              {id} {name} {status}
-            </h1>
-          )
+            <tr key={id}>
+             <td>{id}</td> 
+             <td>{name}</td> 
+             <td>{status}</td> 
+             <td>
+              <button onClick={() => onDelete(id)}>delete</button>
+              </td>
+             <td>
+              <button>edit</button>
+              </td>
+            </tr>
+          );
         })}
+        </tbody>
+        </table>
       </div>
-    )
+    );
   }
 }
