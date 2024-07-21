@@ -9,30 +9,64 @@ export default class Filter extends Component {
     this.state = {
       count: 1,
       data: student,
-      name: "Yulduz",
-      surname: "Oromova"
+      name: " ",
+      status: "",
+      search: 'id'
     }
   }
 
   render() {
+    const onChange = (event) =>{
+      console.log(event.target.name);
+      this.setState({ [event.target.name]: event.target.value });
+    }
+
     const onFilter = (e) => {
-    let res = student.filter((val) => val.name.includes(e.target.value))
-    this.setState({
+      const {value} = e.target
+      let res = student.filter((val) => 
+        `${val[this.state.search]}`.toLowerCase().includes(value.toLowerCase()))
+      this.setState({
       data: res,
-    });
+      });
     }
 
     const onDelete = (id) => {
       console.log(id);
+      let res = this.state.data.filter(value => value.id !== id)
+      this.setState({ data: res });
+    }
+    const onAdd = () => {
+      let user = {
+        id: Date.now(),
+        name: this.state.name,
+        status: this.state.status,
+      };
+      this.setState({ 
+        data: [...this.state.data, user ], 
+        name: '', 
+        status: ''
+      });
+      console.log(user);
     }
 
+    const onSelect = () =>{
+      this.seStatus({search: e.target.value})
+    };
     return (
       <div>
-        {/* <h1>Name: {this.state.name}</h1>
-        <h1>Surname:{this.state.surname}</h1>
-        <h1>State {this.state.count}</h1>
-        <input name='name' onChange={onChange} type="text" placeholder='name' />
-        <input onChange={onFilter} type="text" placeholder='filter'/> */}
+        <h1>Name: {this.state.name}</h1>
+        <h1>Status:{this.state.status}</h1>
+        <input value={this.state.name} name='name' onChange={onChange} type="text" placeholder='name' />
+        <input value={this.state.status} name='status' onChange={onChange} placeholder='surname'/>
+        <button onClick={onAdd}>add</button>
+        <hr />
+        <select onChange={onSelect} name="" id="">
+          <option value="id">ID</option>
+          <option value="id">Name</option>
+          <option value="id">Status</option>
+        </select>
+        <input onChange={onFilter} type="text" placeholder='search'/>
+        <hr />
         <table border={'1px'} width={"100%"}>
           <thead>
           <tr>
@@ -44,7 +78,8 @@ export default class Filter extends Component {
             </tr>
           </thead>
         <tbody>
-          {this.state.data.map(({id, name, status}) =>{
+          {this.state.data.length ?
+          this.state.data.map(({id, name, status}) =>{
           return (
             <tr key={id}>
              <td>{id}</td> 
@@ -58,7 +93,13 @@ export default class Filter extends Component {
               </td>
             </tr>
           );
-        })}
+        }) : (
+          <tr>
+          <th colSpan={5}>
+             <h1>no data</h1>
+          </th>
+        </tr>
+        )}
         </tbody>
         </table>
       </div>
