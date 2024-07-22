@@ -52,6 +52,21 @@ export default class Filter extends Component {
     const onSelect = () =>{
       this.seStatus({search: e.target.value})
     };
+
+    const onEdit = ( {id, name, status}, isSave ) => {
+    
+      if(isSave){
+        let res = this.state.data.map((val) => val.id === this.state.active.id ? {...val, name: this.state.name, status: this.state.status} : val)
+        this.setState({active: null, data: res})
+      } else {
+        this.setState({
+          name: name,
+          status: status,
+          active: { id, name, status },
+        });
+      }
+    };
+
     return (
       <div>
         <h1>Name: {this.state.name}</h1>
@@ -83,13 +98,15 @@ export default class Filter extends Component {
           return (
             <tr key={id}>
              <td>{id}</td> 
-             <td>{name}</td> 
-             <td>{status}</td> 
+             <td>{' '}{this.state.active?.id === id ? <input onChange={onChange} name='name'type = 'text' value={this.state.name} /> : name }</td> 
+             <td>{this.state.active?.id === id ? <input onChange={onChange} name='status' type = 'text' value= {this.state.status} /> : status }</td> 
              <td>
               <button onClick={() => onDelete(id)}>delete</button>
               </td>
              <td>
-              <button>edit</button>
+              <button onClick={() => onEdit({id, name, status}, this.state.active?.id === id)}>
+                {this.state.active?.id === id ? 'save' : 'edit'}
+              </button>
               </td>
             </tr>
           );
