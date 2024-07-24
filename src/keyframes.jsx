@@ -9,7 +9,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 class Provider extends React.Component{
   state = {
     light: true,
@@ -30,7 +29,7 @@ class Provider extends React.Component{
         <CommonButton>CommonButton</CommonButton>
         <CommonButtonTwo>CommonButtonTwo</CommonButtonTwo>
         <Rotate>Rotate</Rotate>
-        <br />
+        <br /> <br />
         <button onClick={() => this.setState({ light: !this.state.light})}>Change theme</button>
       </ThemeProvider>
       )
